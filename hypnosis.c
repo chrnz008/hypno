@@ -1,7 +1,8 @@
 #include <raylib.h>
+#include <math.h>
 #include <stdio.h>
 
-#define WAVE_NO 10
+#define WAVE_NO 60
 #define WAVE_SPACING 10
 #define WAVE_SPEED 1
 
@@ -28,8 +29,10 @@ int main() {
 
     struct Vector2 center = {window_width / 2, window_height / 2};
 
+	const int wave_limit = sqrt(window_width*window_width + window_height*window_height)/2;
+
     int child_waves = 1;
-    waves[0] = 1;
+    /* waves[0] = 1; */
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -38,14 +41,14 @@ int main() {
 
         int newchilds = 0;
         for (int idx = 0; idx < child_waves; idx++) {
+            waves[idx] += WAVE_SPEED;
 
-            if (child_waves < WAVE_NO && waves[0] % WAVE_SPACING == 0) {
+            if (idx==0 && child_waves < WAVE_NO && waves[0] % WAVE_SPACING == 0) {
                 newchilds++;
             }
 
             DrawCircleLinesV(center, waves[idx], WHITE);
-            waves[idx] += WAVE_SPEED;
-            waves[idx] %= window_width;
+            waves[idx] %= wave_limit; //trim the wave when hits limit
         }
         child_waves += newchilds;
         wave_state();
