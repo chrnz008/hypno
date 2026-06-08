@@ -22,7 +22,7 @@ int main() {
     InitWindow(window_width, window_height, "look into the watch");
     SetTargetFPS(60);
 
-    ClearBackground(BLACK);
+    /* ClearBackground(BLACK); */
     HideCursor();
 
     const int src_rad = 5;
